@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Air PC</string>
+    <string name="title_activity_maps">AIR PC</string>
+    <string name="title_activity_main">AIR PC</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="answer_to_what_are_we_measuring">We are measuring five pollutants: nitric oxide, nitrogen dioxide,
+        carbon monoxide, ozone,and particulate matter. The NOx group (nitric oxide and nitrogen dioxide) is emitted from
+        automobiles, power plants, and turbines. Carbon monoxide comes from automobile exhaust and burning fuel.
+        Particulate matter is the result of a wide range of manmade and natural sources, while ozone is the
+        result of reactions between chemicals already in our air. Together, these pollutants paint a comprehensive picture
+        of air quality impacts from the interaction of human activity with natural processes.</string>
+    <string name="description_co">What is it? Carbon monoxide (CO) is an odorless, colorless, and toxic gas that is often
+        a byproduct of combustion in gas ranges, automobiles, or unvented kerosene heaters. CO can also be an important
+        indoor pollution concern, because it is often produced from indoor heaters, chimneys and furnaces, fireplaces, and
+        water heaters. \n \n
+        Why does it matter? Because carbon monoxide is difficult to detect and might be a critical indoor pollution problem,
+        our network is especially useful for CO detection. At low concentrations, it can cause mild chest pain in people with
+        heart problems or fatigue in healthy people. CO can be fatal at high concentrations, because of its ability to limit
+        oxygen intake in blood. Other potential issues include angina, impaired vision, and reduced brain function.</string>
+    <string name="description_no">What is it? Nitric oxide (NO) is a byproduct of combustion of air in manmade systems such as
+        automobile engines and fossil fuel power plants, or in natural processes such as thunderstorms. NO is a free radical
+        (it has one unpaired electron), which means that it is highly unstable and likely rapidly reacts with surrounding gases.
+        Usually, NO converts into nitrogen dioxide (NO2), which will enter a complex chain of reactions that may produce ozone
+        or acid rain. \n \n
+        Why does it matter? NO is not included in the Air Quality Index (AQI) produced by the Environmental Protection Agency.
+        However, it is an important precursor to nitrogen dioxide (NO2), which is known to have detrimental effects on human
+        respiratory health. NO2 can also likely produce ozone or acid rain.</string>
+
+    <string name="answer_to_measuring_air_quality">Air quality is monitored in the United States by the Environmental Protection
+        Agency (EPA), which determines air quality using a composite Air Quality Index (AQI). We devised our own AQI by adjusting
+        for the unique measurement schemes calibrated on our sensor nodes. The index determines overall quality based on
+        concentrations of fine particulate matter, carbon monoxide, and ozone. Concentrations are used to produce an index value,
+        ranging from good to unhealthy.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

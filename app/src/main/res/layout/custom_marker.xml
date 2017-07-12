@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="280dp"
+    android:layout_height="150dp"
+    android:background="#FFFFFF">
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content">
+        <com.pkmmte.view.CircularImageView
+            android:layout_centerVertical="true"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:id="@+id/ivPlaceImage"
+            android:adjustViewBounds="true"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            app:border="true"
+            app:border_color="#000000"
+            app:border_width="4dp"
+            android:src="@drawable/marker_icon_good"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_toRightOf="@id/ivPlaceImage">
+
+            <TextView
+                android:id="@+id/tvPlaceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Place Name"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/tvPlaceName"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvPlacesStatusBullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="\u2022"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorGood" />
+
+                <TextView
+                    android:id="@+id/tvPlaceStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Good" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <com.pkmmte.view.CircularImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:adjustViewBounds="true"
+            android:background="#FFFFFF"
+            app:border="true"
+            app:border_color="#000000"
+            app:border_width="4dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/logo_airpc"/>
+
+        <LinearLayout
+            android:id="@+id/llSubIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="SubIndex" />
+
+            <TextView
+                android:id="@+id/tvSubIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="250"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="AQI" />
+
+            <TextView
+                android:id="@+id/tvAqi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="250"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bDetail"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rounded_button_background"
+            android:text="DETAIL"
+            android:textColor="@android:color/holo_blue_dark" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

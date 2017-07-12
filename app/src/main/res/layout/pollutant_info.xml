@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/infoPollutant"
+    android:layout_marginBottom="@dimen/padding_down">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pollutantLine1"
+        android:layout_marginBottom="@dimen/padding_down">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pollutantFormula"
+            android:layout_alignParentLeft="true"
+            android:text="Formula"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pollutantAmount"
+            android:text="amount"
+            android:layout_alignParentRight="true"
+            android:textSize="24sp"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/seperatorPollutant"
+        android:layout_below="@id/pollutantLine1"
+        android:background="@android:color/black"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pollutantLine2"
+        android:layout_below="@id/seperatorPollutant">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pollutantName"
+            android:layout_alignParentLeft="true"
+            android:text="Pollutant Name"
+            android:textSize="12sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pollutantUnit"
+            android:text="unit"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
