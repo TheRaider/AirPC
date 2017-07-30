@@ -123,8 +123,7 @@ public class MainActivity extends AppCompatActivity
             MapFragment MapFragment = new MapFragment();
             transaction.replace(R.id.fragment_container, MapFragment);
             transaction.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            transaction.commitNow();
 
         } else if (id == R.id.nav_data) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

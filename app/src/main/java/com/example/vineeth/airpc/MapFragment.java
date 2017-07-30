@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.appolica.interactiveinfowindow.InfoWindow;
+import com.appolica.interactiveinfowindow.InfoWindowManager;
+import com.appolica.interactiveinfowindow.customview.TouchInterceptFrameLayout;
+import com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -25,120 +31,122 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener ,InfoWindowManager.WindowShowListener{
 
 
 
-    MapView mMapView;
     GoogleMap mMap;
     HashMap<String,LatLng> markersList = new HashMap<>();
+    InfoWindowManager infoWindowManager;
+    HashMap<String,InfoWindow> infoWindowHashMap = new HashMap<>();
+    MapView mapView;
+    TouchInterceptFrameLayout mapViewContainer;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View customView = inflater.inflate(R.layout.fragment_map,container,false);
 
+        mapView = (MapView) customView.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapViewContainer = (TouchInterceptFrameLayout) customView.findViewById(R.id.mapViewContainer);
 
-        mMapView = (MapView) customView.findViewById(R.id.mapView);
+        mapView.getMapAsync(this);
 
-        try {
-            mMapView.onCreate(savedInstanceState);
-            mMapView.onResume(); // needed to get the map to display immediately
+        infoWindowManager = new InfoWindowManager(getChildFragmentManager());
 
-            try {
-                MapsInitializer.initialize(getActivity().getApplicationContext());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            mMapView.getMapAsync(this);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         return customView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+            infoWindowManager.onParentViewCreated(mapViewContainer, null);
+
+
 
     }
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
+        mapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mapView.onSaveInstanceState(outState);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+        infoWindowManager.onDestroy();
+        mapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+        mapView.onLowMemory();
     }
 
-    private class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-
-
-        private View view;
-
-        public CustomInfoWindowAdapter() {
-
-            view = LayoutInflater.from(getContext()).inflate(R.layout.custom_marker, null);
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-
-            if (marker != null
-                    && marker.isInfoWindowShown()) {
-                marker.hideInfoWindow();
-                marker.showInfoWindow();
-            }
-            return null;
-        }
-
-        @Override
-        public View getInfoWindow(final Marker marker) {
-
-
-            return view;
-        }
+    @Override
+    public void onWindowShowStarted(@NonNull InfoWindow infoWindow) {
 
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    @Override
+    public void onWindowShown(@NonNull InfoWindow infoWindow) {
+
+    }
+
+    @Override
+    public void onWindowHideStarted(@NonNull InfoWindow infoWindow) {
+
+    }
+
+    @Override
+    public void onWindowHidden(@NonNull InfoWindow infoWindow) {
+
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        infoWindowManager.onMapReady(googleMap);
+
+
         mMap = googleMap;
+
+        final int offsetX = (int) getResources().getDimension(R.dimen.marker_offset_x);
+        final int offsetY = (int) getResources().getDimension(R.dimen.marker_offset_y);
+        final InfoWindow.MarkerSpecification markerSpec =
+                new InfoWindow.MarkerSpecification(offsetX, offsetY);
+
+
+
 
         setUpMarkers();
         // Adding Markers at all the selected places
         for(String placeName: markersList.keySet()){
             LatLng placeLocation = markersList.get(placeName);
-            MarkerOptions marker = new MarkerOptions().position(placeLocation).title(placeName);
-            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon_good));
 
-            mMap.addMarker(marker);
+            MarkerOptions markerOptions = new MarkerOptions().position(placeLocation).title(placeName);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon_good));
+            Marker marker = mMap.addMarker(markerOptions);
+
+            infoWindowHashMap.put(placeName,new InfoWindow(marker, markerSpec, new InfoWindowFragment()));
         }
 
         // Add a marker in IIT Dhanbad and move the camera
@@ -178,13 +186,40 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,GoogleMa
             mMap.setMyLocationEnabled(true);
         }
 
-        mMap.setOnMarkerClickListener(this);
-
-        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-
+        mMap.setOnMarkerClickListener(MapFragment.this);
 
     }
 
+  /*  private class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+
+        private View view;
+
+        public CustomInfoWindowAdapter() {
+
+            view = LayoutInflater.from(getContext()).inflate(R.layout.custom_marker, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            if (marker != null
+                    && marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
+            return null;
+        }
+
+        @Override
+        public View getInfoWindow(final Marker marker) {
+
+
+            return view;
+        }
+
+    }
+    */
 
     public void setUpMarkers(){
         LatLng mainGate = new LatLng(23.809248, 86.442629);
@@ -220,16 +255,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,GoogleMa
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        switch (marker.getTitle()){
-            case "Marker in Sydney":
-                Intent intent = new Intent(getContext(),InfoActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                marker.showInfoWindow();
-                break;
+        InfoWindow infoWindow = null;
+
+        try{
+           infoWindow =  infoWindowHashMap.get(marker.getTitle());
+        }catch (Exception e){
 
         }
+
+        if (infoWindow != null) {
+            infoWindowManager.toggle(infoWindow, true);
+        }
+
         return true;
     }
 

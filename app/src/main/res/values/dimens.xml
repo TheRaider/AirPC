@@ -8,6 +8,7 @@
 
 
     <dimen name="padding_down">3dp</dimen>
+    <dimen name="marker_offset_x">5dp</dimen>
+    <dimen name="marker_offset_y">39dp</dimen>
 
-    padding_seperator
 </resources>
